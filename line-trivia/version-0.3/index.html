@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <title>Lines trivia</title>
+  </head>
+  <body>
+    <div>
+      <str id="game-instructions">Pick groups of lines for random roll</str>
+      <str id="end-stations-guessed"></str><br />
+      <input id="game-input" type="text" disabled />
+      <button id="enter">Enter</button>
+      <button id="roll">Roll line</button>
+      <button id="reset">Reset</button><br />
+      <str>Choose lines to include</str><br />
+      <input id="metro-lines" type="checkbox" />
+      <str>Metro lines</str>
+      <input id="future-metro-lines" type="checkbox" />
+      <str>Future metro lines</str>
+      <button id="choose">Choose</button><br />
+      <str id="chosen-preview">Chosen: None</str><br />
+      <str id="entered-list">Entered: None</str>
+      <script src="./index.js"></script>
+    </div>
+  </body>
+</html>
