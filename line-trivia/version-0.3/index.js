@@ -13,9 +13,9 @@ const chosenPreview = document.getElementById("chosen-preview");
 const enteredList = document.getElementById("entered-list");
 
 const metroLines = [
-  { lineName: "A", endStations: ["Nemocnice Motol", "Skalka", "Depo Hostiva\u0159"] }, //Nemocnice Motol, Skalka, Depo HostivaÅ™
-  { lineName: "B", endStations: ["Zli\u010d\u00edn", "\u010cern\u00fd Most"] }, //ZliÄÃ­n, ÄŒernÃ½ Most
-  { lineName: "C", endStations: ["H\u00e1je", "Let\u0148any"] }, //HÃ¡je, LetÅˆany
+  { lineName: "A", endStations: ["Nemocnice Motol", "Skalka", "Depo Hostiva\u0159"] }, //Nemocnice Motol, Skalka, Depo Hostivař
+  { lineName: "B", endStations: ["Zli\u010d\u00edn", "\u010cern\u00fd Most"] }, //Zličí­n, Černý Most
+  { lineName: "C", endStations: ["H\u00e1je", "Let\u0148any"] }, //Háje, Letňany
 ];
 
 const futureMetroLines = [

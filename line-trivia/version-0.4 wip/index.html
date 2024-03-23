@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <script src="./index.js" type="module"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lines trivia</title>
+  </head>
+  <body>
+    <!-- Měl bych tohle trochu překopat -->
+    <div class="game">
+      <div class="communication">
+        <str id="instructions">Pick groups of lines for random roll</str>
+        <str id="end-stations-guessed"></str>
+      </div>
+      <div class="inputs">
+        <input id="user-input" type="text" disabled placeholder="Enter" />
+        <button id="enter-btn" type="button">Enter</button>
+        <button id="roll-btn" type="button">Roll line</button>
+        <button id="reset-btn" type="button">Reset</button><br />
+      </div>
+      <div class="choosing">
+        <str>Choose lines to include</str><br />
+        <input id="metro-lines" type="checkbox" />
+        <str>Metro lines</str>
+        <input id="future-metro-lines" type="checkbox" />
+        <str>Future metro lines</str>
+        <button id="choose-btn">Choose</button><br />
+        <str id="chosen-view">Chosen: None</str><br />
+      </div>
+      <div class="outputs">
+        <str id="entered-view">Entered: None</str>
+      </div>
+      <div class="test">
+        <button id="add">+1</button>
+        <button id="sub">-1</button>
+      </div>
+    </div>
+  </body>
+</html>
