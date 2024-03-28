@@ -3,15 +3,15 @@
   <head>
     <link rel="stylesheet" type="text/css" href="/style.css" />
     <script src="./index.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min.js" type="module"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lines trivia</title>
   </head>
   <body>
-    <!-- Měl bych tohle trochu překopat -->
     <div class="game">
       <div class="communication">
         <str id="instructions">Pick groups of lines for random roll</str>
-        <str id="end-stations-guessed"></str>
+        <str id="guessed-no"></str>
       </div>
       <div class="inputs">
         <input id="user-input" type="text" disabled placeholder="Enter" />
@@ -21,10 +21,12 @@
       </div>
       <div class="choosing">
         <str>Choose lines to include</str><br />
-        <input id="metro-lines" type="checkbox" />
+        <input id="metro-lines-cb" type="checkbox" />
         <str>Metro lines</str>
-        <input id="future-metro-lines" type="checkbox" />
+        <input id="f-metro-lines-cb" type="checkbox" />
         <str>Future metro lines</str>
+        <input id="d-tram-lines-cb" type="checkbox" />
+        <str>Day tram lines</str>
         <button id="choose-btn">Choose</button><br />
         <str id="chosen-view">Chosen: None</str><br />
       </div>
