@@ -135,7 +135,7 @@ export const linesDB = {
         "Korunovační",
         "Letenské náměstí",
         "Kamenická",
-        "Strossmayerova náměstí",
+        "Strossmayerovo náměstí",
         "Vltavská",
         "Holešovická tržnice",
         "Tusarova",
@@ -1499,7 +1499,7 @@ export const linesDB = {
     },
     {
       lineName: "59",
-      endStations: ["Nádraží Veleslavín", "Letiště"],
+      endStations: ["Letiště", "Nádraží Veleslavín"],
       routes: [[0, 1]],
       routeExceptions: [{ both: [], pos: [], neg: [] }],
       stations: [],
@@ -1512,10 +1512,10 @@ export const linesDB = {
   formerLines: [
     {
       lineName: "119",
-      endStations: ["Nádraží Veleslavín", "Letiště"],
+      endStations: ["Letiště", "Nádraží Veleslavín"],
       routes: [[0, 1]],
-      routeExceptions: [{ both: [], pos: [], neg: [] }],
-      stations: [],
+      routeExceptions: [{ both: [], pos: ["Letiště"], neg: ["Schengenská"] }],
+      stations: [["Terminál 1", "Terminál 2"], "Letiště", "Schengenská", "..."],
     },
     {
       lineName: "140",
