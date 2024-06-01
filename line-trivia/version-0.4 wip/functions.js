@@ -13,12 +13,13 @@ import _ from "https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min
  * @returns {boolean}
  */
 export function checkforAnswers(input, answersArr, gamemode) {
-  console.log(input);
+  //console.log(input);
   if (answersArr.length === 0) return;
   if (gamemode === 0 || gamemode === 1) {
     if (answersArr.includes(input)) return true;
   }
   if (gamemode === 2) {
+    if (answersArr[0] === input) return true;
   }
 }
 
@@ -52,8 +53,8 @@ export function genStationDiv(stations) {
       type = "End";
     }
 
-    if (num == 0) console.log(station);
-    stationDivContent += `<div id="st${num}" style="height:18px; width:300px; margin:1px; display:flex;"><img src="../pictures/${type}Station.png"><p style="margin:0; padding:0">${station}</p></div>\n`;
+    //if (num == 0) console.log(station);
+    stationDivContent += `<div id="st${num}" style="height:18px; width:300px; margin:1px; display:flex;"><img src="../pictures/${type}Station.png"><p id="st${num}p" style="margin:0; padding:0"></p></div>\n`;
     num++;
   });
   return stationDivContent;
@@ -72,13 +73,13 @@ export function genLineRoute(line) {
 
   let routeEndStNo = line.routes[routeNo];
 
-  if (direction === 1) routeEndStNo.reverse();
-
   let routeEndSt = [];
 
   routeEndStNo.forEach((endStNo) => {
     routeEndSt.push(line.endStations[endStNo]);
   });
+
+  if (direction === 1) routeEndSt.reverse();
 
   stations = _.difference(stations, line.routeExceptions[routeNo].both);
 
