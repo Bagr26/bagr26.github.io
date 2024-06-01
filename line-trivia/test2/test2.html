@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <link rel="stylesheet" type="text/css" href="test2.css" />
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min.js" type="module"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lines trivia</title>
+  </head>
+  <body>
+    <div class="game">
+      <div class="communication">
+        <str id="instructions">Pick groups of lines for random roll</str>
+        <str id="guessed-no"></str>
+      </div>
+      <div class="inputs">
+        <input id="user-input" type="text" placeholder="Enter" />
+        <button id="enter-btn" type="button">Enter</button>
+        <button id="roll-btn" type="button">Roll line</button>
+        <button id="reset-btn" type="button">Reset</button><br />
+      </div>
+      <div class="choosing">
+        <p>Select lines to include</p>
+        <input id="ch-btn1" class="choose-btn" type="checkbox" value="1" name="linesIncl[]">
+        <label for="ch-btn1" class="choose-lab">Metro lines</label><br>
+        <input id="ch-btn2" class="choose-btn" type="checkbox" value="2" name="linesIncl[]">
+        <label for="ch-btn2" class="choose-lab">Future metro lines</label><br>
+        <input id="ch-btn3" class="choose-btn" type="checkbox" value="3" name="linesIncl[]">
+        <label for="ch-btn3" class="choose-lab">Day tram lines</label><br>
+        <input id="ch-btn4" class="choose-btn" type="checkbox" value="4" name="linesIncl[]" disabled>
+        <label for="ch-btn4" class="choose-lab wip">Special tram lines</label><br>
+        <input id="ch-btn5" class="choose-btn" type="checkbox" value="5" name="linesIncl[]" >
+        <label for="ch-btn5" class="choose-lab ">Night tram lines</label><br>
+        <input id="ch-btn6" class="choose-btn" type="checkbox" value="6" name="linesIncl[]" disabled>
+        <label for="ch-btn6" class="choose-lab wip">Trolleybus lines</label><br>
+        <input id="ch-btn7" class="choose-btn" type="checkbox" value="7" name="linesIncl[]" disabled>
+        <label for="ch-btn7" class="choose-lab wip">Day bus lines</label><br>
+        <input id="ch-btn8" class="choose-btn" type="checkbox" value="8" name="linesIncl[]" disabled>
+        <label for="ch-btn8" class="choose-lab wip">Night bus lines</label><br>
+        <input id="ch-btn9" class="choose-btn" type="checkbox" value="9" name="linesIncl[]" disabled>
+        <label for="ch-btn9" class="choose-lab wip">Regional day bus lines</label><br>
+        <input id="ch-btn10" class="choose-btn" type="checkbox" value="10" name="linesIncl[]" disabled>
+        <label for="ch-btn10" class="choose-lab wip">Regional night bus lines</label><br>
+        <input id="ch-btn11" class="choose-btn" type="checkbox" value="11" name="linesIncl[]" disabled>
+        <label for="ch-btn11" class="choose-lab wip">Former lines</label>
+      </div>
+    </div>
+    <script src="./test2.js"></script>
+  </body>
+</html>

@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="cs">
   <head>
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-    <script src="./index.js" type="module"></script>
-    <script src="./functions/checkForAnswers.js" type="module"></script>
-    <script src="../database/linesDB.js" type="module"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min.js" type="module"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lines trivia</title>
   </head>
   <body>
-    <div class="game">
-      <div class="communication">
-        <str id="instructions">Pick groups of lines for random roll</str>
-        <str id="guessed-no"></str>
+    <div id="game" style="height: auto">
+      <div id="communication" style="height: auto; width: 400px">
+        <p id="instructions">Roll a line</p>
       </div>
-      <div class="inputs">
+      <div id="inputs" style="height: 25px; width: 400px">
         <input id="user-input" type="text" placeholder="Enter" />
         <button id="enter-btn" type="button">Enter</button>
         <button id="roll-btn" type="button">Roll line</button>
         <button id="reset-btn" type="button">Reset</button><br />
       </div>
-      <div class="choosing">
-        <str>Choose lines to include</str><br />
-        <input id="metro-lines-cb" type="checkbox" />
-        <str>Metro lines</str>
-        <input id="f-metro-lines-cb" type="checkbox" />
-        <str>Future metro lines</str>
-        <input id="d-tram-lines-cb" type="checkbox" />
-        <str>Day tram lines</str>
-        <button id="choose-btn">Choose</button><br />
-        <str id="chosen-view">Chosen: None</str><br />
+      <div class="choosing" style="width: 200px; height: auto">
+        <p>Select lines to include</p>
+        <input id="ch-btn1" class="choose-btn" type="checkbox" value="metroLines" name="linesIncl[]" />
+        <label for="ch-btn1" class="choose-lab">Metro lines</label><br />
+        <input id="ch-btn2" class="choose-btn" type="checkbox" value="futureMetroLines" name="linesIncl[]" />
+        <label for="ch-btn2" class="choose-lab">Future metro lines</label><br />
+        <input id="ch-btn3" class="choose-btn" type="checkbox" value="tramLinesDay" name="linesIncl[]" />
+        <label for="ch-btn3" class="choose-lab">Day tram lines</label><br />
+        <input id="ch-btn4" class="choose-btn" type="checkbox" value="tramLinesSpecial" name="linesIncl[]" disabled />
+        <label for="ch-btn4" class="choose-lab wip">Special tram lines</label><br />
+        <input id="ch-btn5" class="choose-btn" type="checkbox" value="tramLinesNight" name="linesIncl[]" />
+        <label for="ch-btn5" class="choose-lab">Night tram lines</label><br />
+        <input id="ch-btn6" class="choose-btn" type="checkbox" value="trolleybusLines" name="linesIncl[]" disabled />
+        <label for="ch-btn6" class="choose-lab wip">Trolleybus lines</label><br />
+        <input id="ch-btn7" class="choose-btn" type="checkbox" value="busLinesDay" name="linesIncl[]" disabled />
+        <label for="ch-btn7" class="choose-lab wip">Day bus lines</label><br />
+        <input id="ch-btn8" class="choose-btn" type="checkbox" value="busLinesNight" name="linesIncl[]" disabled />
+        <label for="ch-btn8" class="choose-lab wip">Night bus lines</label><br />
+        <input id="ch-btn9" class="choose-btn" type="checkbox" value="rBusLinesDay" name="linesIncl[]" disabled />
+        <label for="ch-btn9" class="choose-lab wip">Regional day bus lines</label><br />
+        <input id="ch-btn10" class="choose-btn" type="checkbox" value="rBusLinesNight" name="linesIncl[]" disabled />
+        <label for="ch-btn10" class="choose-lab wip">Regional night bus lines</label><br />
+        <input id="ch-btn11" class="choose-btn" type="checkbox" value="formerLines" name="linesIncl[]" disabled />
+        <label for="ch-btn11" class="choose-lab wip">Former lines</label>
       </div>
-      <div class="outputs">
-        <str id="entered-view">Entered: None</str>
-      </div>
+      <div id="answers-view" style="width: 250px; height: auto"></div>
     </div>
+    <script src="./index.js" type="module"></script>
   </body>
 </html>

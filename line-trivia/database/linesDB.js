@@ -1130,7 +1130,7 @@ export const linesDB = {
         "Drinopol",
         "Marjánka",
         "Malovanka",
-        "Parl Maxe van der Stoela",
+        "Park Maxe van der Stoela",
         "Vozovna Střešovice",
         "Prašný most",
         "Hradčanská",

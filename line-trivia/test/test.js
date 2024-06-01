@@ -178,7 +178,7 @@ function genStDiv(sts) {
     }
 
     if (num == 0) console.log(st);
-    stDivContent += `<div id="st${num}" style="height:18px; width:150px; margin:1px; display:flex;"><img src="../pictures/${type}Station.png><p style="margin:0; padding:0">${st}</p></div>\n`;
+    stDivContent += `<div id="st${num}" style="height:18px; width:150px; margin:1px; display:flex;"><img src="../pictures/${type}Station.png"><p style="margin:0; padding:0">${st}</p></div>\n`;
     num++;
   });
   return stDivContent;

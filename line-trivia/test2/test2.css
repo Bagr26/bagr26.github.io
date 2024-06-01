@@ -1,0 +1,32 @@
+html {
+    margin: 10px;
+    background-color: dimgray;
+    color: whitesmoke
+}
+.choosing {
+    padding: 2px
+}
+.choosing p {
+    margin-bottom:2px;
+}
+.choose-btn {
+    display:none;
+}
+.choose-lab {
+    color:salmon
+}
+.choose-btn:hover + label {
+    color:orange
+}
+.choose-btn:checked + label {
+    color:lime
+}
+.choose-btn:hover:checked + label {
+    color: greenyellow;
+}
+.choose-lab.wip {
+    color:lightgray
+}
+.choose-lab.wip:hover {
+    color:lightgray
+}
