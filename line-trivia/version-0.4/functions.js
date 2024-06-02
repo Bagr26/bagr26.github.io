@@ -154,12 +154,3 @@ export function convLineGroupID(lgID, lgNo) {
   }
   return lgName;
 }
-
-/**
- *
- * @param {number} lIndex
- * @param {number} rNo
- * @param {number} dir
- * @returns {*}
- */
-export function genSetLineRoute(lIndex, rNo, dir) {}
