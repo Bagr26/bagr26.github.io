@@ -338,7 +338,7 @@ export const linesDB = {
       lineName: "6",
       endStations: ["Kobylisy", "Kubánské náměstí"],
       routes: [[0, 1]],
-      routeExceptions: [{ both: [], pos: ["Novoměstská Radnice"], neg: ["Březiněveská", "Nábřeží Kapitána Jaroše"] }],
+      routeExceptions: [{ both: [], pos: ["Novoměstská Radnice"], neg: ["Březiněvská", "Nábřeží Kapitána Jaroše"] }],
       stations: [
         "Březiněvská",
         "Kobylisy",
@@ -1079,7 +1079,7 @@ export const linesDB = {
       lineName: "24",
       endStations: ["Vozovna Kobylisy", "Náměstí Bratří Synků"],
       routes: [[0, 1]],
-      routeExceptions: [{ both: [], pos: ["Novoměstská radnice"], neg: ["Březiněveská", "Divadlo pod Palmovkou", "Moráň", "Otakarova"] }],
+      routeExceptions: [{ both: [], pos: ["Novoměstská radnice"], neg: ["Březiněvská", "Divadlo pod Palmovkou", "Moráň", "Otakarova"] }],
       stations: [
         "Březiněvská",
         "Kobylisy",
