@@ -105,7 +105,7 @@ export function genLineRoute(line, routeNo, direction) {
  * @returns {string}
  */
 export function convLineTypeID(ltID, ltNo) {
-  if (ltID !== 0 && !ltID) ltID = randomInt(1, ltNo);
+  if ((ltID !== 0 && !ltID) || ltID > ltNo - 1) ltID = randomInt(1, ltNo);
   let ltName = "";
   switch (ltID) {
     case 0:
