@@ -209,9 +209,9 @@ export const linesDB = {
             "Levského",
           ],
           pos: ["Novoměstská radnice"],
-          neg: ["Březiněveská", "Divadlo pod Palmovkou", "Moráň"],
+          neg: ["Březiněvská", "Divadlo pod Palmovkou", "Moráň"],
         },
-        { both: [], pos: ["Novoměstská radnice", "Levského"], neg: ["Březiněveská", "Divadlo pod Palmovkou", "Moráň"] },
+        { both: [], pos: ["Novoměstská radnice", "Levského"], neg: ["Březiněvská", "Divadlo pod Palmovkou", "Moráň"] },
       ],
       stations: [
         "Březiněvská",
@@ -713,7 +713,7 @@ export const linesDB = {
     },
     {
       lineName: "16",
-      endStations: ["Sídliště Řepy", "Kotlářka", "Ústřední dílny Dopravního podniku"],
+      endStations: ["Sídliště Řepy", "Kotlářka", "Ústřední dílny DP"],
       routes: [
         [0, 2],
         [1, 2],
@@ -766,7 +766,7 @@ export const linesDB = {
         "Depo Hostivař",
         "Malešická továrna",
         "Na Homoli",
-        "Ústřední dílny Dopravního podniku",
+        "Ústřední dílny DP",
       ],
     },
     {
