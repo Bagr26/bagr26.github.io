@@ -62,7 +62,7 @@ export function genStationDiv(stations) {
 
 /**
  *
- * @param {{lineName: string; endStations: string[]; routes: number[][]; routeExceptions: { both: string[]; pos: string[]; neg: string[]; }[]; stations: string[];}} line
+ * @param {{lineName: string; endStations: string[]; routes: number[][]; routeExceptions: { both: string[]; pos: string[]; neg: string[] }[]; stations: string[]}} line
  * @param {number} routeNo
  * @param {number} direction
  * @returns {{stations: string[]; endStations: string[]}}
