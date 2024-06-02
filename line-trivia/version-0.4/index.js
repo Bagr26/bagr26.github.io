@@ -23,7 +23,7 @@ let lastIndex = -1;
 const LINE_GROUPS = 11; //number of line groups, if changing add cases
 const GAMEMODE = 2; //currently hard-set gamemode
 
-rollButton.addEventListener("click", () => {
+function rollFunction() {
   userInput.disabled = false;
   if (userInput.value[0] === "-") {
     let setLineCode = userInput.value;
@@ -75,6 +75,10 @@ rollButton.addEventListener("click", () => {
   remainingStations = lineRoute.stations;
   hintButton.disabled = false;
   lastIndex = -1;
+}
+
+rollButton.addEventListener("click", () => {
+  rollFunction();
 });
 
 function enterFunction() {
@@ -98,16 +102,16 @@ function enterFunction() {
 }
 
 userInput.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    enterFunction();
-  }
+  if (e.key === "Enter") enterFunction();
+  if (e.altKey && e.key === "r") rollFunction();
+  if (e.altKey && e.key === "h") hintFunction();
 });
 
 enterButton.addEventListener("click", () => {
   enterFunction();
 });
 
-hintButton.addEventListener("click", () => {
+function hintFunction() {
   if (!lineRoute) return;
   if (remainingStations.length === 0) return;
   let hintStation = lineRoute.stations[lastIndex + 1];
@@ -116,6 +120,10 @@ hintButton.addEventListener("click", () => {
       .split(/\s/)
       .map((word) => word.charAt(0))
       .join("... ") + "...";
+}
+
+hintButton.addEventListener("click", () => {
+  hintFunction();
 });
 
 // NO DONT WRITE MORE CODE SMH FR
