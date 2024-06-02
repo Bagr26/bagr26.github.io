@@ -49,9 +49,6 @@ function rollFunction() {
 
     idLineTypeName = lineTypeName;
     idLineType = lineTypeID;
-    idLineIndex = lineIndex;
-    idLineRoute = routeNo;
-    idLineDirection = direction;
 
     if (lineIndex !== 0 && !lineIndex) lineIndex = randomInt(0, linesDB[lineTypeName].length - 1);
     else if (lineIndex > linesDB[lineTypeName].length - 1) lineIndex = linesDB[lineTypeName].length - 1;
@@ -82,10 +79,6 @@ function rollFunction() {
 
     console.log(currentLine);
     lineRoute = genLineRoute(currentLine);
-
-    idLineIndex = lastPositiveIndex - 1;
-    idLineRoute = lineRoute.routeNo;
-    idLineDirection = lineRoute.direction;
   }
   answersView.innerHTML = genStationDiv(lineRoute.stations);
   instructions.textContent = `Line: ${currentLine.lineName}, ${lineRoute.endStations[0]} - ${lineRoute.endStations[1]}`;
@@ -93,6 +86,10 @@ function rollFunction() {
   remainingStations = lineRoute.stations;
   hintButton.disabled = false;
   lastIndex = -1;
+
+  idLineIndex = lastPositiveIndex - 1;
+  idLineRoute = lineRoute.routeNo;
+  idLineDirection = lineRoute.direction;
 }
 
 rollButton.addEventListener("click", () => {
