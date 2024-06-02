@@ -63,13 +63,15 @@ export function genStationDiv(stations) {
 /**
  *
  * @param {{lineName: string; endStations: string[]; routes: number[][]; routeExceptions: { both: string[]; pos: string[]; neg: string[]; }[]; stations: string[];}} line
+ * @param {number} routeNo
+ * @param {number} direction
  * @returns {{stations: string[]; endStations: string[]}}
  */
-export function genLineRoute(line) {
+export function genLineRoute(line, routeNo, direction) {
   let stations = line.stations;
 
-  let routeNo = randomInt(0, line.routes.length - 1);
-  let direction = randomInt(0, 1);
+  if (!routeNo || routeNo > line.routes.length - 1) routeNo = randomInt(0, line.routes.length - 1);
+  if (!direction) direction = randomInt(0, 1);
 
   let routeEndStNo = line.routes[routeNo];
 
@@ -95,3 +97,71 @@ export function genLineRoute(line) {
 
   return (lineRoute = { stations: stations, endStations: routeEndSt });
 }
+
+/**
+ *
+ * @param {number} lgID
+ * @param {number} lgNo
+ * @returns {string}
+ */
+export function convLineGroupID(lgID, lgNo) {
+  console.log(lgID);
+  if (lgID !== 0 && !lgID) lgID = randomInt(1, lgNo);
+  console.log(lgID);
+  let lgName = "";
+  switch (lgID) {
+    case 0:
+      lgName = "metroLines";
+      break;
+
+    case 1:
+      lgName = "futureMetroLines";
+      break;
+
+    case 2:
+      lgName = "tramLinesDay";
+      break;
+
+    case 3:
+      lgName = "tramLinesSpecial";
+      break;
+
+    case 4:
+      lgName = "tramLinesNight";
+      break;
+
+    case 5:
+      lgName = "trolleybusLinesDay";
+      break;
+
+    case 6:
+      lgName = "busLinesDay";
+      break;
+
+    case 7:
+      lgName = "busLinesNight";
+      break;
+
+    case 8:
+      lgName = "rBusLinesDay";
+      break;
+
+    case 9:
+      lgName = "rBusLinesNight";
+      break;
+
+    case 10:
+      lgName = "formerLines";
+      break;
+  }
+  return lgName;
+}
+
+/**
+ *
+ * @param {number} lIndex
+ * @param {number} rNo
+ * @param {number} dir
+ * @returns {*}
+ */
+export function genSetLineRoute(lIndex, rNo, dir) {}

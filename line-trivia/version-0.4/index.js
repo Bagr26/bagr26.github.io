@@ -4,7 +4,7 @@ import _ from "https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min
 
 import { linesDB } from "../database/linesDB.js";
 
-import { checkforAnswers, randomInt, genStationDiv, genLineRoute } from "./functions.js";
+import { checkforAnswers, randomInt, genStationDiv, genLineRoute, convLineGroupID } from "./functions.js";
 
 const userInput = document.getElementById("user-input");
 const enterButton = document.getElementById("enter-btn");
@@ -18,29 +18,56 @@ let currentLineIndex = 0;
 let currentLine = {};
 let lineRoute = null;
 let remainingStations = [];
-let gameEndCheck = false;
 let lastIndex = -1;
 
+const LINE_GROUPS = 11; //number of line groups, if changing add cases
+const GAMEMODE = 2; //currently hard-set gamemode
+
 rollButton.addEventListener("click", () => {
-  userInput.disabled = false;
-  let selectedLinesVal = Array.from(document.querySelectorAll(".choose-btn:checked"), ({ value }) => value);
-  if (selectedLinesVal.length === 0) return;
-  let numberOfRollLines = 0;
-  selectedLinesVal.forEach((lineVal) => {
-    numberOfRollLines += linesDB[lineVal].length;
-  });
-  currentLineIndex = randomInt(1, numberOfRollLines, currentLineIndex);
-  let relativeIndex = currentLineIndex;
-  let lastPositiveIndex = currentLineIndex;
+  if (userInput.value[0] === "-") {
+    let setLineCode = userInput.value;
 
-  selectedLinesVal.forEach((lineVal) => {
-    if (linesDB[lineVal].length >= relativeIndex && relativeIndex >= 1) currentLine = linesDB[lineVal][lastPositiveIndex - 1];
-    relativeIndex = relativeIndex - linesDB[lineVal].length;
-    if (relativeIndex >= 1) lastPositiveIndex = relativeIndex;
-  });
+    let lineGroupID = /-t\d\d?/.exec(setLineCode);
+    if (lineGroupID) lineGroupID = Number(lineGroupID[0].substring(2));
 
-  console.log(currentLine);
-  lineRoute = genLineRoute(currentLine);
+    let lineIndex = /-i\d\d?\d?/.exec(setLineCode);
+    if (lineIndex) lineIndex = Number(lineIndex[0].substring(2));
+
+    let routeNo = /-r\d\d?/.exec(setLineCode);
+    if (routeNo) routeNo = Number(routeNo[0].substring(2));
+
+    let direction = /-d(0|1)/.exec(setLineCode);
+    if (direction) direction = Number(direction[0].substring(2));
+
+    let lineGroupName = convLineGroupID(lineGroupID, LINE_GROUPS);
+
+    if (!lineIndex) lineIndex = randomInt(0, linesDB[lineGroupName].length - 1);
+    else if (lineIndex > linesDB[lineGroupName].length - 1) lineIndex = linesDB[lineGroupName].length - 1;
+
+    currentLine = linesDB[lineGroupName][lineIndex];
+
+    console.log(currentLine);
+    lineRoute = genLineRoute(currentLine, routeNo, direction);
+  } else {
+    let selectedLinesVal = Array.from(document.querySelectorAll(".choose-btn:checked"), ({ value }) => value);
+    if (selectedLinesVal.length === 0) return;
+    let numberOfRollLines = 0;
+    selectedLinesVal.forEach((lineVal) => {
+      numberOfRollLines += linesDB[lineVal].length;
+    });
+    currentLineIndex = randomInt(1, numberOfRollLines, currentLineIndex);
+    let relativeIndex = currentLineIndex;
+    let lastPositiveIndex = currentLineIndex;
+
+    selectedLinesVal.forEach((lineVal) => {
+      if (linesDB[lineVal].length >= relativeIndex && relativeIndex >= 1) currentLine = linesDB[lineVal][lastPositiveIndex - 1];
+      relativeIndex = relativeIndex - linesDB[lineVal].length;
+      if (relativeIndex >= 1) lastPositiveIndex = relativeIndex;
+    });
+
+    console.log(currentLine);
+    lineRoute = genLineRoute(currentLine);
+  }
   answersView.innerHTML = genStationDiv(lineRoute.stations);
   instructions.textContent = `Line: ${currentLine.lineName}, ${lineRoute.endStations[0]} - ${lineRoute.endStations[1]}`;
 
@@ -52,7 +79,7 @@ rollButton.addEventListener("click", () => {
 function enterFunction() {
   if (!lineRoute) return;
   if (remainingStations.length === 0) remainingStations = lineRoute.stations;
-  let hasAnswer = checkforAnswers(userInput.value, remainingStations, 2); //gamemodes will be worked on later
+  let hasAnswer = checkforAnswers(userInput.value, remainingStations, GAMEMODE); //gamemodes will be worked on later
   if (hasAnswer) {
     let stationIndex = _.indexOf(lineRoute.stations, userInput.value);
     lastIndex = stationIndex;
