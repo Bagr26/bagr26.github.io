@@ -85,13 +85,12 @@ export function genLineRoute(line, routeNo, direction) {
 
   stations = _.difference(stations, line.routeExceptions[routeNo].both);
 
+  if (direction === 1) stations.reverse();
+
   stations = _.flatten(stations);
 
   if (direction === 0) stations = _.difference(stations, line.routeExceptions[routeNo].pos);
-  if (direction === 1) {
-    stations = _.difference(stations, line.routeExceptions[routeNo].neg);
-    stations.reverse();
-  }
+  if (direction === 1) stations = _.difference(stations, line.routeExceptions[routeNo].neg);
 
   let lineRoute = {};
 
