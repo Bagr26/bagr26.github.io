@@ -4,7 +4,7 @@ import _ from "https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min
 
 import { linesDB } from "../database/linesDB.js";
 
-import { checkforAnswers, randomInt, genStationDiv, genLineRoute, convLineGroupID } from "./functions.js";
+import { checkforAnswers, randomInt, genStationDiv, genLineRoute, convLineTypeID, convLineTypeName } from "./functions.js";
 
 const userInput = document.getElementById("user-input");
 const enterButton = document.getElementById("enter-btn");
@@ -20,15 +20,21 @@ let lineRoute = null;
 let remainingStations = [];
 let lastIndex = -1;
 
-const LINE_GROUPS = 11; //number of line groups, if changing add cases
+let idLineTypeName = "";
+let idLineType = -1;
+let idLineIndex = -1;
+let idLineRoute = -1;
+let idLineDirection = -1;
+
+const LINE_TYPES = 11; //number of line types, if changing add cases
 const GAMEMODE = 2; //currently hard-set gamemode
 
 function rollFunction() {
   if (userInput.value[0] === "-") {
     let setLineCode = userInput.value;
 
-    let lineGroupID = /-t\d\d?/.exec(setLineCode);
-    if (lineGroupID) lineGroupID = Number(lineGroupID[0].substring(2));
+    let lineTypeID = /-t\d\d?/.exec(setLineCode);
+    if (lineTypeID) lineTypeID = Number(lineTypeID[0].substring(2));
 
     let lineIndex = /-i\d\d?\d?/.exec(setLineCode);
     if (lineIndex) lineIndex = Number(lineIndex[0].substring(2));
@@ -39,12 +45,18 @@ function rollFunction() {
     let direction = /-d(0|1)/.exec(setLineCode);
     if (direction) direction = Number(direction[0].substring(2));
 
-    let lineGroupName = convLineGroupID(lineGroupID, LINE_GROUPS);
+    let lineTypeName = convLineTypeID(lineTypeID, LINE_TYPES);
 
-    if (lineIndex !== 0 && !lineIndex) lineIndex = randomInt(0, linesDB[lineGroupName].length - 1);
-    else if (lineIndex > linesDB[lineGroupName].length - 1) lineIndex = linesDB[lineGroupName].length - 1;
+    idLineTypeName = lineTypeName;
+    idLineType = lineTypeID;
+    idLineIndex = lineIndex;
+    idLineRoute = routeNo;
+    idLineDirection = direction;
 
-    currentLine = linesDB[lineGroupName][lineIndex];
+    if (lineIndex !== 0 && !lineIndex) lineIndex = randomInt(0, linesDB[lineTypeName].length - 1);
+    else if (lineIndex > linesDB[lineTypeName].length - 1) lineIndex = linesDB[lineTypeName].length - 1;
+
+    currentLine = linesDB[lineTypeName][lineIndex];
 
     console.log(currentLine);
     lineRoute = genLineRoute(currentLine, routeNo, direction);
@@ -60,13 +72,20 @@ function rollFunction() {
     let lastPositiveIndex = currentLineIndex;
 
     selectedLinesVal.forEach((lineVal) => {
-      if (linesDB[lineVal].length >= relativeIndex && relativeIndex >= 1) currentLine = linesDB[lineVal][lastPositiveIndex - 1];
+      if (linesDB[lineVal].length >= relativeIndex && relativeIndex >= 1) {
+        currentLine = linesDB[lineVal][lastPositiveIndex - 1];
+        idLineTypeName = lineVal;
+      }
       relativeIndex = relativeIndex - linesDB[lineVal].length;
       if (relativeIndex >= 1) lastPositiveIndex = relativeIndex;
     });
 
     console.log(currentLine);
     lineRoute = genLineRoute(currentLine);
+
+    idLineIndex = lastPositiveIndex - 1;
+    idLineRoute = lineRoute.routeNo;
+    idLineDirection = lineRoute.direction;
   }
   answersView.innerHTML = genStationDiv(lineRoute.stations);
   instructions.textContent = `Line: ${currentLine.lineName}, ${lineRoute.endStations[0]} - ${lineRoute.endStations[1]}`;
@@ -99,10 +118,27 @@ function enterFunction() {
   }
 }
 
+function clearInput() {
+  userInput.value = "";
+}
+
+function genSetID() {
+  let setID = "";
+
+  if (idLineType === -1) idLineType = convLineTypeName(idLineTypeName);
+
+  setID = `-t${idLineType}-i${idLineIndex}-r${idLineRoute}-d${idLineDirection}`;
+  console.log(setID);
+
+  userInput.value = setID;
+}
+
 document.addEventListener("keyup", (e) => {
   if (e.key === "Enter") enterFunction();
   if (e.altKey && e.key === "r") rollFunction();
   if (e.altKey && e.key === "h") hintFunction();
+  if (e.altKey && e.key === "c") clearInput();
+  if (e.altKey && e.key === "g") genSetID();
 });
 
 enterButton.addEventListener("click", () => {

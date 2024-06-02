@@ -65,7 +65,7 @@ export function genStationDiv(stations) {
  * @param {{lineName: string; endStations: string[]; routes: number[][]; routeExceptions: { both: string[]; pos: string[]; neg: string[] }[]; stations: string[]}} line
  * @param {number} routeNo
  * @param {number} direction
- * @returns {{stations: string[]; endStations: string[]}}
+ * @returns {{stations: string[]; endStations: string[], routeNo: number, direction: number}}
  */
 export function genLineRoute(line, routeNo, direction) {
   let stations = line.stations;
@@ -95,62 +95,117 @@ export function genLineRoute(line, routeNo, direction) {
 
   let lineRoute = {};
 
-  return (lineRoute = { stations: stations, endStations: routeEndSt });
+  return (lineRoute = { stations: stations, endStations: routeEndSt, routeNo: routeNo, direction: direction });
 }
 
 /**
  *
- * @param {number} lgID
- * @param {number} lgNo
+ * @param {number} ltID
+ * @param {number} ltNo
  * @returns {string}
  */
-export function convLineGroupID(lgID, lgNo) {
-  if (lgID !== 0 && !lgID) lgID = randomInt(1, lgNo);
-  let lgName = "";
-  switch (lgID) {
+export function convLineTypeID(ltID, ltNo) {
+  if (ltID !== 0 && !ltID) ltID = randomInt(1, ltNo);
+  let ltName = "";
+  switch (ltID) {
     case 0:
-      lgName = "metroLines";
+      ltName = "metroLines";
       break;
 
     case 1:
-      lgName = "futureMetroLines";
+      ltName = "futureMetroLines";
       break;
 
     case 2:
-      lgName = "tramLinesDay";
+      ltName = "tramLinesDay";
       break;
 
     case 3:
-      lgName = "tramLinesSpecial";
+      ltName = "tramLinesSpecial";
       break;
 
     case 4:
-      lgName = "tramLinesNight";
+      ltName = "tramLinesNight";
       break;
 
     case 5:
-      lgName = "trolleybusLinesDay";
+      ltName = "trolleybusLinesDay";
       break;
 
     case 6:
-      lgName = "busLinesDay";
+      ltName = "busLinesDay";
       break;
 
     case 7:
-      lgName = "busLinesNight";
+      ltName = "busLinesNight";
       break;
 
     case 8:
-      lgName = "rBusLinesDay";
+      ltName = "rBusLinesDay";
       break;
 
     case 9:
-      lgName = "rBusLinesNight";
+      ltName = "rBusLinesNight";
       break;
 
     case 10:
-      lgName = "formerLines";
+      ltName = "formerLines";
       break;
   }
-  return lgName;
+  return ltName;
+}
+
+/**
+ *
+ * @param {string} ltName
+ * @returns {number}
+ */
+export function convLineTypeName(ltName) {
+  let ltID = 0;
+  switch (ltName) {
+    case "metroLines":
+      ltID = 0;
+      break;
+
+    case "futureMetroLines":
+      ltID = 1;
+      break;
+
+    case "tramLinesDay":
+      ltID = 2;
+      break;
+
+    case "tramLinesSpecial":
+      ltID = 3;
+      break;
+
+    case "tramLinesNight":
+      ltID = 4;
+      break;
+
+    case "trolleybusLinesDay":
+      ltID = 5;
+      break;
+
+    case "busLinesDay":
+      ltID = 6;
+      break;
+
+    case "busLinesNight":
+      ltID = 7;
+      break;
+
+    case "rBusLinesDay":
+      ltID = 8;
+      break;
+
+    case "rBusLinesNight":
+      ltID = 9;
+      break;
+
+    case "formerLines":
+      ltID = 10;
+      break;
+  }
+  return ltID;
 }
