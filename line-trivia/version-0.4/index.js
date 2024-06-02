@@ -47,11 +47,12 @@ function rollFunction() {
 
     let lineTypeName = convLineTypeID(lineTypeID, LINE_TYPES);
 
-    idLineTypeName = lineTypeName;
-    idLineType = lineTypeID;
-
     if (lineIndex !== 0 && !lineIndex) lineIndex = randomInt(0, linesDB[lineTypeName].length - 1);
     else if (lineIndex > linesDB[lineTypeName].length - 1) lineIndex = linesDB[lineTypeName].length - 1;
+
+    idLineTypeName = lineTypeName;
+    idLineType = lineTypeID;
+    idLineIndex = lineIndex;
 
     currentLine = linesDB[lineTypeName][lineIndex];
 
@@ -79,6 +80,8 @@ function rollFunction() {
 
     console.log(currentLine);
     lineRoute = genLineRoute(currentLine);
+
+    idLineIndex = lastPositiveIndex - 1;
   }
   answersView.innerHTML = genStationDiv(lineRoute.stations);
   instructions.textContent = `Line: ${currentLine.lineName}, ${lineRoute.endStations[0]} - ${lineRoute.endStations[1]}`;
@@ -87,7 +90,6 @@ function rollFunction() {
   hintButton.disabled = false;
   lastIndex = -1;
 
-  idLineIndex = lastPositiveIndex - 1;
   idLineRoute = lineRoute.routeNo;
   idLineDirection = lineRoute.direction;
 }
