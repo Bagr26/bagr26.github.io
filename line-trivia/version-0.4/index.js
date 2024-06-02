@@ -24,6 +24,7 @@ const LINE_GROUPS = 11; //number of line groups, if changing add cases
 const GAMEMODE = 2; //currently hard-set gamemode
 
 rollButton.addEventListener("click", () => {
+  userInput.disabled = false;
   if (userInput.value[0] === "-") {
     let setLineCode = userInput.value;
 
