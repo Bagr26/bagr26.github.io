@@ -51,7 +51,7 @@ export const linesDB = {
         "Anděl",
         "Karlovo náměstí",
         "Národní třída",
-        " Můstek",
+        "Můstek",
         "Náměstí Republiky",
         "Florenc",
         "Křižíkova",
