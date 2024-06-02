@@ -83,6 +83,8 @@ export function genLineRoute(line) {
 
   stations = _.difference(stations, line.routeExceptions[routeNo].both);
 
+  stations = _.flatten(stations);
+
   if (direction === 0) stations = _.difference(stations, line.routeExceptions[routeNo].pos);
   if (direction === 1) {
     stations = _.difference(stations, line.routeExceptions[routeNo].neg);

@@ -1,5 +1,8 @@
-* {
-  font-size: 20px;
+html {
+  font-size: 16px;
+  margin: 10px;
+  background-color: dimgray;
+  color: whitesmoke;
 }
 
 h1 {
@@ -14,4 +17,20 @@ p {
 
 a {
   font-size: 1.5rem;
+}
+
+a {
+  color: skyblue;
+}
+
+a:hover {
+  color: lightblue;
+}
+
+a:visited {
+  color: orchid;
+}
+
+a:visited:hover {
+  color: magenta;
 }
