@@ -101,7 +101,7 @@ function enterFunction() {
   }
 }
 
-userInput.addEventListener("keyup", (e) => {
+document.addEventListener("keyup", (e) => {
   if (e.key === "Enter") enterFunction();
   if (e.altKey && e.key === "r") rollFunction();
   if (e.altKey && e.key === "h") hintFunction();
