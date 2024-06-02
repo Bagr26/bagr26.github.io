@@ -42,7 +42,7 @@ function rollFunction() {
 
     let lineGroupName = convLineGroupID(lineGroupID, LINE_GROUPS);
 
-    if (!lineIndex) lineIndex = randomInt(0, linesDB[lineGroupName].length - 1);
+    if (lineIndex !== 0 && !lineIndex) lineIndex = randomInt(0, linesDB[lineGroupName].length - 1);
     else if (lineIndex > linesDB[lineGroupName].length - 1) lineIndex = linesDB[lineGroupName].length - 1;
 
     currentLine = linesDB[lineGroupName][lineIndex];

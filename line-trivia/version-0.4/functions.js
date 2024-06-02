@@ -71,7 +71,7 @@ export function genLineRoute(line, routeNo, direction) {
   let stations = line.stations;
 
   if (!routeNo || routeNo > line.routes.length - 1) routeNo = randomInt(0, line.routes.length - 1);
-  if (!direction) direction = randomInt(0, 1);
+  if (direction !== 0 && !direction) direction = randomInt(0, 1);
 
   let routeEndStNo = line.routes[routeNo];
 
