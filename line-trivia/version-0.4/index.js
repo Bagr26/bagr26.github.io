@@ -128,7 +128,7 @@ function genSetID() {
   if (idLineType === -1) idLineType = convLineTypeName(idLineTypeName);
 
   setID = `-t${idLineType}-i${idLineIndex}-r${idLineRoute}-d${idLineDirection}`;
-  console.log(setID);
+  //console.log(setID);
 
   userInput.value = setID;
 }
