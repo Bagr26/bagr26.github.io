@@ -101,12 +101,13 @@ rollButton.addEventListener("click", () => {
 function enterFunction() {
   if (!lineRoute) return;
   if (remainingStations.length === 0) remainingStations = lineRoute.stations;
-  let hasAnswer = checkforAnswers(userInput.value, remainingStations, GAMEMODE); //gamemodes will be worked on later
+  let input = userInput.value.trimEnd();
+  let hasAnswer = checkforAnswers(input, remainingStations, GAMEMODE); //gamemodes will be worked on later
   if (hasAnswer) {
-    let stationIndex = _.indexOf(lineRoute.stations, userInput.value);
+    let stationIndex = _.indexOf(lineRoute.stations, input);
     lastIndex = stationIndex;
     document.getElementById(`st${stationIndex}p`).textContent = lineRoute.stations[stationIndex];
-    remainingStations = _.without(remainingStations, userInput.value);
+    remainingStations = _.without(remainingStations, input);
     userInput.value = "";
     if (remainingStations.length === 0) {
       instructions.textContent = "Congrats!";

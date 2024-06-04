@@ -14,7 +14,6 @@ import _ from "https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-esm-min
  */
 export function checkforAnswers(input, answersArr, gamemode) {
   //console.log(input);
-  input.trimEnd();
   if (answersArr.length === 0) return;
   if (gamemode === 0 || gamemode === 1) {
     if (answersArr.includes(input)) return true;
