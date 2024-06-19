@@ -88,7 +88,6 @@ function rollFunction() {
 
   remainingStations = lineRoute.stations;
   remainingStations.forEach((station, i) => (remainingStations[i] = station.replace(/\((.|-|\s)*\)/, "").trimEnd()));
-  console.log(remainingStations);
 
   hintButton.disabled = false;
   lastIndex = -1;
