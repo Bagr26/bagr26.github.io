@@ -87,6 +87,9 @@ function rollFunction() {
   instructions.textContent = `Line: ${currentLine.lineName}, ${lineRoute.endStations[0]} - ${lineRoute.endStations[1]}`;
 
   remainingStations = lineRoute.stations;
+  remainingStations.forEach((station, i) => (remainingStations[i] = station.replace(/\((.|-|\s)*\)/, "").trimEnd()));
+  console.log(remainingStations);
+
   hintButton.disabled = false;
   lastIndex = -1;
 
@@ -100,7 +103,11 @@ rollButton.addEventListener("click", () => {
 
 function enterFunction() {
   if (!lineRoute) return;
-  if (remainingStations.length === 0) remainingStations = lineRoute.stations;
+  if (remainingStations.length === 0) {
+    remainingStations = lineRoute.stations;
+    remainingStations.forEach((station, i) => (remainingStations[i] = station.replace(/\((.|-|\s)*\)/, "").trimEnd()));
+  }
+
   let input = userInput.value.trimEnd();
   let hasAnswer = checkforAnswers(input, remainingStations, GAMEMODE); //gamemodes will be worked on later
   if (hasAnswer) {
