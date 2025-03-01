@@ -1,0 +1,60 @@
+html {
+  font-size: 16px;
+  margin: 10px;
+  background-color: dimgray;
+  color: whitesmoke;
+}
+
+div#communication p,
+div#inputs input {
+  margin: 4px;
+  margin-left: 0;
+}
+
+.choosing {
+  padding: 2px;
+}
+.choosing p {
+  margin-bottom: 2px;
+}
+.choose-btn {
+  display: none;
+}
+.choose-lab {
+  color: salmon;
+}
+.choose-btn:hover + label {
+  color: orange;
+}
+.choose-btn:checked + label {
+  color: lime;
+}
+.choose-btn:hover:checked + label {
+  color: greenyellow;
+}
+.choose-lab.wip {
+  color: lightgray;
+}
+.choose-lab.wip:hover {
+  color: lightgray;
+}
+
+div#answers-view {
+  float: right;
+  position: relative;
+  top: -263px;
+}
+div#game {
+  width: 750px;
+}
+
+@media (max-width: 780px) {
+  div#answers-view {
+    float: none;
+    top: 0;
+    margin-left: -3px;
+  }
+  div#game {
+    width: 400px;
+  }
+}
