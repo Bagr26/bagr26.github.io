@@ -2,6 +2,14 @@ console.log("Welcome to version 0.5");
 
 console.log("WIP");
 
+/**
+ * @typedef {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}} line
+ * @typedef {line[]} lineList
+ * @typedef {{busLines: lineList;formerLines: lineList;futureMetroLines: lineList;metroLines: lineList;nightTramLines: lineList;tramLines: lineList;trolleybusLines: lineList}} lineDB
+ * @typedef {"GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE"} lineColour
+ * @typedef {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"} lineType
+ */
+
 import { lineDatabase } from "../newDatabase/lineDatabase.js";
 
 const userInput = document.getElementById("user-input");
@@ -19,7 +27,7 @@ const answersView = document.getElementById("answers-view");
 const GAMEMODE = 2;
 
 /**
- * @type {{name: string;colour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @type {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
  */
 let currentLineRoute;
 
@@ -77,6 +85,8 @@ document.addEventListener("keyup", (e) => {
   if (e.key === "Enter") enterButton.click();
   if (e.altKey && e.key === "r") rollButton.click();
   if (e.altKey && e.key === "h") hintButton.click();
+  if (e.altKey && e.key === "c") userInput.value = "";
+  if (e.altKey && e.key === "g") userInput.value = genLineRouteID(currentLineRoute, lineDatabase);
 });
 
 /**
@@ -97,10 +107,10 @@ function checkForAnswers(input, answersArray, gamemode) {
 /**
  *
  * @param {string} input
- * @param {{}} lineDB
- * @param {{name: string;colour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} prevLineRoute
+ * @param {lineDB} lineDB
+ * @param {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} prevLineRoute
  * @param {string[]} selectedLineTypes
- * @returns {{name: string;colour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @returns {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
  */
 function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = null) {
   const LINE_TYPES = 11;
@@ -154,7 +164,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
      */
     let currentLine = lineDB[lineTypeName][lineIndex];
 
-    let lineRoute = genLineRoute(currentLine, routeIndex, direction);
+    let lineRoute = genLineRoute(currentLine, lineTypeName, routeIndex, direction);
 
     console.log(lineRoute);
 
@@ -173,6 +183,11 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
    */
   let currentLine;
 
+  /**
+   * @type {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
+   */
+  let finalLineType;
+
   let prevLineName;
   if (!prevLineRoute) prevLineName = "";
   else prevLineName = prevLineRoute.name;
@@ -184,7 +199,6 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
     let indexValue = selectedLinesIndex;
     //final index within a lineType array
     let lineIndex = selectedLinesIndex;
-    let finalLineType;
 
     selectedLineTypes.forEach((lineType) => {
       if (lineDB[lineType].length >= indexValue && indexValue >= 0) {
@@ -198,7 +212,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
     lineName = currentLine.lineName;
   }
 
-  let lineRoute = genLineRoute(currentLine);
+  let lineRoute = genLineRoute(currentLine, finalLineType);
 
   console.log(lineRoute);
 
@@ -208,11 +222,12 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
 /**
  *
  * @param {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}} line
+ * @param {string} lineType
  * @param {number} routeIndex
  * @param {0|1} direction
- * @returns {{name: string;colour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @returns {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
  */
-function genLineRoute(line, routeIndex = null, direction = null) {
+function genLineRoute(line, lineType, routeIndex = null, direction = null) {
   if ((routeIndex !== 0 && !routeIndex) || routeIndex > line.routes.length - 1) routeIndex = randomInt(0, line.routes.length - 1);
   if (direction !== 0 && !direction) direction = randomInt(0, 1);
 
@@ -255,12 +270,13 @@ function genLineRoute(line, routeIndex = null, direction = null) {
   }
 
   /**
-   * @type {{name: string;colour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+   * @type {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
    */
   let lineRoute = {};
 
   return (lineRoute = {
     name: line.lineName,
+    type: lineType,
     colour: line.lineColour,
     endStations: routeEndSt,
     stations: stations,
@@ -271,12 +287,35 @@ function genLineRoute(line, routeIndex = null, direction = null) {
 
 /**
  *
+ * @param {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} lineRoute
+ * @param {lineDB} lineDB
+ * @returns {string}
+ */
+function genLineRouteID(lineRoute, lineDB) {
+  if (!lineRoute) return "";
+  let lineTypeID = lineTypeNametoID(lineRoute.type);
+
+  lineDB[""];
+  let lineIndex = lineDB[lineRoute.type].findIndex((line) => {
+    return line.lineName === lineRoute.name;
+  });
+
+  let lineRouteID = `-t${lineTypeID}-i${lineIndex}-r${lineRoute.routeIndex}-d${lineRoute.direction}`;
+
+  return lineRouteID;
+}
+
+/**
+ *
  * @param {number} ltID
  * @param {number} ltNo
- * @returns {string}
+ * @returns {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
  */
 export function lineTypeIDtoName(ltID, ltNo) {
   if ((ltID !== 0 && !ltID) || ltID > ltNo - 1) ltID = randomInt(1, ltNo);
+  /**
+   * @type {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
+   */
   let ltName = "";
   switch (ltID) {
     case 0:
@@ -292,7 +331,7 @@ export function lineTypeIDtoName(ltID, ltNo) {
       break;
 
     case 3:
-      ltName = "tramLinesSpecial";
+      ltName = "specialTramLines";
       break;
 
     case 4:
@@ -308,15 +347,15 @@ export function lineTypeIDtoName(ltID, ltNo) {
       break;
 
     case 7:
-      ltName = "busLinesNight";
+      ltName = "nightBusLines";
       break;
 
     case 8:
-      ltName = "rBusLinesDay";
+      ltName = "regionalBusLines";
       break;
 
     case 9:
-      ltName = "rBusLinesNight";
+      ltName = "regionalNightBusLines";
       break;
 
     case 10:
@@ -324,6 +363,64 @@ export function lineTypeIDtoName(ltID, ltNo) {
       break;
   }
   return ltName;
+}
+
+/**
+ *
+ * @param {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"} ltName
+ * @returns {number}
+ */
+function lineTypeNametoID(ltName) {
+  /**
+   * @type {number}
+   */
+  let ltID;
+  switch (ltName) {
+    case "metroLines":
+      ltID = 0;
+      break;
+
+    case "futureMetroLines":
+      ltID = 1;
+      break;
+
+    case "tramLines":
+      ltID = 2;
+      break;
+
+    case "specialTramLines":
+      ltID = 3;
+      break;
+
+    case "nightTramLines":
+      ltID = 4;
+      break;
+
+    case "trolleybusLines":
+      ltID = 5;
+      break;
+
+    case "busLines":
+      ltID = 6;
+      break;
+
+    case "nightBusLines":
+      ltID = 7;
+      break;
+
+    case "regionalBusLines":
+      ltID = 8;
+      break;
+
+    case "regionalNightBusLines":
+      ltID = 9;
+      break;
+
+    case "formerLines":
+      ltID = 10;
+      break;
+  }
+  return ltID;
 }
 
 /**
