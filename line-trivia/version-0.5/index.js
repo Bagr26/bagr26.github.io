@@ -77,8 +77,16 @@ enterButton.addEventListener("click", () => {
   }
 });
 
+//TBA - a better hint system
 hintButton.addEventListener("click", () => {
-  console.log("Hint button");
+  if (!currentLineRoute) return;
+  if (remainingStations.length === 0) return;
+  let hintStation = currentLineRoute.stations[currentStationIndex];
+  document.getElementById(`st${currentStationIndex}p`).textContent =
+    hintStation
+      .split(/\s/)
+      .map((word) => word.charAt(0))
+      .join("... ") + "...";
 });
 
 document.addEventListener("keyup", (e) => {
