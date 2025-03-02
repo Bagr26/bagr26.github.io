@@ -1321,6 +1321,9 @@ export const busLines = [
         "Anděl",
         "Na Knížecí",
       ],
+    ],
+    stationsBackward: [
+      ["Kavalírka", "Kavalírka", "Schodová", "Na Sklonku", "Nádraží Cibulka", "U Lesíka", "Naskové", "Průchova", "Karenova", "Šmukýřka"],
       [
         "Na Knížecí",
         "Klamovka",
@@ -1335,9 +1338,6 @@ export const busLines = [
         "Karenova",
         "Šmukýřka",
       ],
-    ],
-    stationsBackward: [
-      ["Kavalírka", "Kavalírka", "Schodová", "Na Sklonku", "Nádraží Cibulka", "U Lesíka", "Naskové", "Průchova", "Karenova", "Šmukýřka"],
     ],
   },
   {
