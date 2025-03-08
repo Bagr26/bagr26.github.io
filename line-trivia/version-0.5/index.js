@@ -243,11 +243,23 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
  * @returns {lineRoute}
  */
 function genLineRoute(line, lineType, prevLineRoute = null, routeIndex = null, direction = null) {
-  if ((routeIndex !== 0 && !routeIndex) || routeIndex > line.routes.length - 1) routeIndex = randomInt(0, line.routes.length - 1);
-  if (direction !== 0 && !direction) direction = randomInt(0, 1);
+  //is direction was imputed
+  let directionCheck = false;
 
-  //switches direction value if there is the same line and routeIndex and the direction happens to be the same as last time
-  if (prevLineRoute && prevLineRoute.name === line.lineName && direction === prevLineRoute.direction && routeIndex === prevLineRoute.routeIndex) {
+  if ((routeIndex !== 0 && !routeIndex) || routeIndex > line.routes.length - 1) routeIndex = randomInt(0, line.routes.length - 1);
+  if (direction !== 0 && !direction) {
+    direction = randomInt(0, 1);
+    directionCheck = true;
+  }
+
+  //switches direction value if there is the same line and routeIndex and the direction happens to be the same as last time and wasnt imputed to the function
+  if (
+    directionCheck &&
+    prevLineRoute &&
+    prevLineRoute.name === line.lineName &&
+    direction === prevLineRoute.direction &&
+    routeIndex === prevLineRoute.routeIndex
+  ) {
     switch (direction) {
       case 0:
         direction = 1;
