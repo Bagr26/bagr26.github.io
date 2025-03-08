@@ -84,11 +84,14 @@ hintButton.addEventListener("click", () => {
   if (!currentLineRoute) return;
   if (remainingStations.length === 0) return;
   let hintStation = currentLineRoute.stations[currentStationIndex];
-  document.getElementById(`st${currentStationIndex}p`).textContent =
-    hintStation
-      .split(/\s/)
-      .map((word) => word.charAt(0))
-      .join("... ") + "...";
+  document.getElementById(`st${currentStationIndex}p`).textContent = hintStation
+    .split(/\s/)
+    .map((word) => {
+      if (word.length === 1) return word;
+      if ((word.length === 2) & word.endsWith(".")) return word;
+      return word.charAt(0) + "...";
+    })
+    .join(" ");
 });
 
 document.addEventListener("keyup", (e) => {
