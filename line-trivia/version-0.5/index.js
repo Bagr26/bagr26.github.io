@@ -174,11 +174,11 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
     else if (lineIndex > lineDB[lineTypeName].length - 1) lineIndex = lineDB[lineTypeName].length - 1;
 
     /**
-     * @type {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}}
+     * @type {line}
      */
     let currentLine = lineDB[lineTypeName][lineIndex];
 
-    let lineRoute = genLineRoute(currentLine, lineTypeName, routeIndex, direction, prevLineRoute);
+    let lineRoute = genLineRoute(currentLine, lineTypeName, prevLineRoute, routeIndex, direction);
 
     console.log(lineRoute);
 
@@ -193,7 +193,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
   let lineName = "";
 
   /**
-   * @type {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}}
+   * @type {line}
    */
   let currentLine;
 
@@ -235,7 +235,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
 
 /**
  *
- * @param {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}} line
+ * @param {line} line
  * @param {string} lineType
  * @param {lineRoute} prevLineRoute
  * @param {number} routeIndex
