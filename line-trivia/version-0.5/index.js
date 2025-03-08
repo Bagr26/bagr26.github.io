@@ -101,6 +101,7 @@ document.addEventListener("keyup", (e) => {
   if (e.altKey && e.key === "h") hintButton.click();
   if (e.altKey && e.key === "c") userInput.value = "";
   if (e.altKey && e.key === "g") userInput.value = genLineRouteID(currentLineRoute, lineDatabase);
+  if (e.altKey && e.key === "v") userInput.focus();
 });
 
 /**
