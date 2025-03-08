@@ -44,8 +44,10 @@ let currentStationIndex;
 rollButton.addEventListener("click", () => {
   let selectedLineTypes = Array.from(document.querySelectorAll(".choose-btn:checked"), ({ value }) => value);
 
-  currentLineRoute = rollFunction(userInput.value, lineDatabase, currentLineRoute, selectedLineTypes);
-  if (!currentLineRoute) return;
+  let lineRoute = rollFunction(userInput.value, lineDatabase, currentLineRoute, selectedLineTypes);
+  if (!lineRoute) return;
+
+  currentLineRoute = lineRoute;
 
   answersView.innerHTML = genStationDiv(currentLineRoute.stations, currentLineRoute.colour);
   instructions.textContent = `Line: ${currentLineRoute.name}, ${currentLineRoute.endStations[0]} - ${currentLineRoute.endStations[1]}`;
