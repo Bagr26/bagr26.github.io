@@ -8,6 +8,7 @@ console.log("WIP");
  * @typedef {{busLines: lineList;formerLines: lineList;futureMetroLines: lineList;metroLines: lineList;nightTramLines: lineList;tramLines: lineList;trolleybusLines: lineList}} lineDB
  * @typedef {"GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE"} lineColour
  * @typedef {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"} lineType
+ * @typedef {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} lineRoute
  */
 
 import { lineDatabase } from "../newDatabase/lineDatabase.js";
@@ -27,7 +28,7 @@ const answersView = document.getElementById("answers-view");
 const GAMEMODE = 2;
 
 /**
- * @type {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @type {lineRoute}
  */
 let currentLineRoute;
 
@@ -121,9 +122,9 @@ function checkForAnswers(input, answersArray, gamemode) {
  *
  * @param {string} input
  * @param {lineDB} lineDB
- * @param {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} prevLineRoute
+ * @param {lineRoute} prevLineRoute
  * @param {string[]} selectedLineTypes
- * @returns {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @returns {lineRoute}
  */
 function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = null) {
   const LINE_TYPES = 11;
@@ -177,7 +178,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
      */
     let currentLine = lineDB[lineTypeName][lineIndex];
 
-    let lineRoute = genLineRoute(currentLine, lineTypeName, routeIndex, direction);
+    let lineRoute = genLineRoute(currentLine, lineTypeName, routeIndex, direction, prevLineRoute);
 
     console.log(lineRoute);
 
@@ -197,7 +198,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
   let currentLine;
 
   /**
-   * @type {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
+   * @type {lineType}
    */
   let finalLineType;
 
@@ -225,7 +226,7 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
     lineName = currentLine.lineName;
   }
 
-  let lineRoute = genLineRoute(currentLine, finalLineType);
+  let lineRoute = genLineRoute(currentLine, finalLineType, prevLineRoute);
 
   console.log(lineRoute);
 
@@ -236,13 +237,25 @@ function rollFunction(input, lineDB, prevLineRoute = null, selectedLineTypes = n
  *
  * @param {{lineName: string;lineColour: "GREEN"|"YELLOW"|"RED"|"DARKBLUE"|"BROWN"|"PURPLE"|"LIGHTBLUE";endStations: string[];routes: number[][];stationsForward: string[][];stationsBackward: string[][]}} line
  * @param {string} lineType
+ * @param {lineRoute} prevLineRoute
  * @param {number} routeIndex
  * @param {0|1} direction
- * @returns {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+ * @returns {lineRoute}
  */
-function genLineRoute(line, lineType, routeIndex = null, direction = null) {
+function genLineRoute(line, lineType, prevLineRoute = null, routeIndex = null, direction = null) {
   if ((routeIndex !== 0 && !routeIndex) || routeIndex > line.routes.length - 1) routeIndex = randomInt(0, line.routes.length - 1);
   if (direction !== 0 && !direction) direction = randomInt(0, 1);
+
+  //switches direction value if there is the same line and routeIndex and the direction happens to be the same as last time
+  if (prevLineRoute && prevLineRoute.name === line.lineName && direction === prevLineRoute.direction && routeIndex === prevLineRoute.routeIndex) {
+    switch (direction) {
+      case 0:
+        direction = 1;
+        break;
+      case 1:
+        direction = 0;
+    }
+  }
 
   //console.log(line);
 
@@ -283,7 +296,7 @@ function genLineRoute(line, lineType, routeIndex = null, direction = null) {
   }
 
   /**
-   * @type {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}}
+   * @type {lineRoute}
    */
   let lineRoute = {};
 
@@ -300,7 +313,7 @@ function genLineRoute(line, lineType, routeIndex = null, direction = null) {
 
 /**
  *
- * @param {{name: string;type: lineType;colour: lineColour;endStations: string[];stations: string[];routeIndex: number;direction: 0|1}} lineRoute
+ * @param {lineRoute} lineRoute
  * @param {lineDB} lineDB
  * @returns {string}
  */
@@ -322,12 +335,12 @@ function genLineRouteID(lineRoute, lineDB) {
  *
  * @param {number} ltID
  * @param {number} ltNo
- * @returns {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
+ * @returns {lineType}
  */
 export function lineTypeIDtoName(ltID, ltNo) {
   if ((ltID !== 0 && !ltID) || ltID > ltNo - 1) ltID = randomInt(1, ltNo);
   /**
-   * @type {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"}
+   * @type {lineType}
    */
   let ltName = "";
   switch (ltID) {
@@ -380,7 +393,7 @@ export function lineTypeIDtoName(ltID, ltNo) {
 
 /**
  *
- * @param {"metroLines"|"futureMetroLines"|"tramLines"|"specialTramLines"|"nightTramLines"|"trolleybusLines"|"busLines"|"nightBusLines"|"regionalBusLines"|"regionalNightBusLines"|"formerLines"} ltName
+ * @param {lineType} ltName
  * @returns {number}
  */
 function lineTypeNametoID(ltName) {
@@ -445,7 +458,7 @@ function lineTypeNametoID(ltName) {
  */
 function randomInt(min, max, prevNum = null) {
   let randomNo = Math.floor(Math.random() * (max - min + 1)) + min;
-  if (max > 1 && randomNo === prevNum) randomNo = randomInt(min, max, prevNum);
+  if (max >= 1 && randomNo === prevNum) randomNo = randomInt(min, max, prevNum);
   return randomNo;
 }
 
