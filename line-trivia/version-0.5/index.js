@@ -19,6 +19,7 @@ const rollButton = document.getElementById("roll-btn");
 const hintButton = document.getElementById("hint-btn");
 
 const instructions = document.getElementById("instructions");
+const answerCounter = document.getElementById("answer-counter");
 const answersView = document.getElementById("answers-view");
 
 // gamemodes:
@@ -52,6 +53,7 @@ rollButton.addEventListener("click", () => {
 
   answersView.innerHTML = genStationDiv(currentLineRoute.stations, currentLineRoute.colour);
   instructions.textContent = `Line: ${currentLineRoute.name}, ${currentLineRoute.endStations[0]} - ${currentLineRoute.endStations[1]}`;
+  answerCounter.textContent = `0/${currentLineRoute.stations.length}`;
 
   remainingStations = currentLineRoute.stations;
   currentStationIndex = 0;
@@ -73,6 +75,7 @@ enterButton.addEventListener("click", () => {
     remainingStations = remainingStations.slice(1);
     userInput.value = "";
     currentStationIndex++;
+    answerCounter.textContent = `${currentStationIndex}/${currentLineRoute.stations.length}`;
     if (remainingStations.length === 0) {
       instructions.textContent = "Congrats!";
       hintButton.disabled = true;
