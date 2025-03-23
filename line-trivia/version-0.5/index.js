@@ -43,6 +43,13 @@ let remainingStations;
  */
 let currentStationIndex;
 
+const url = new URL(window.location);
+const urlParams = url.searchParams;
+const urlType = urlParams.get("type");
+const urlIndex = urlParams.get("index");
+const urlRoute = urlParams.get("route");
+const urlDirection = urlParams.get("direction");
+
 rollButton.addEventListener("click", () => {
   let selectedLineTypes = Array.from(document.querySelectorAll(".choose-btn:checked"), ({ value }) => value);
 
@@ -106,6 +113,23 @@ document.addEventListener("keyup", (e) => {
   if (e.altKey && e.key === "g") userInput.value = genLineRouteID(currentLineRoute, lineDatabase);
   if (e.altKey && e.key === "v") userInput.focus();
 });
+
+//converts url to a specific line route
+{
+  let lineRouteCode = "";
+
+  if (urlType && Number(urlType) !== NaN) lineRouteCode += `-t${urlType}`;
+
+  if (urlIndex && Number(urlIndex) !== NaN) lineRouteCode += `-i${urlIndex}`;
+
+  if (urlRoute && Number(urlRoute) !== NaN) lineRouteCode += `-r${urlRoute}`;
+
+  if (urlDirection && Number(urlDirection) !== NaN) lineRouteCode += `-d${urlDirection}`;
+
+  userInput.value = lineRouteCode;
+  rollButton.click();
+  userInput.value = "";
+}
 
 /**
  *
